@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="jquery-ui.css">
-		<link rel="stylesheet" type="text/css" href="editor.css">
-		<script src="jquery.js"></script>
-		<script src="jquery-ui.js"></script>
-		<script src="data.js"></script>
-		<script src="tabs.js"></script>
-		
-	</head>
-	<body>
-		<header>
-			<input type="button" id="add" value="+"/>
-			<input type="button" id="doDelete" value="x"/>
-			<input type="button" id="doSave" value="Download"/>
-			<input type="button" id="doEmail" value="Email"/>
-		</header>
-		<nav>
-		</nav>
-		<main>
-			<textarea id="editor" class="html"></textarea>
-			<div id="prompt">
-				<div class="inner">
-					<input type="text" id="fileName" value="file.txt"/>
-					<input type="button" id="fileSave" value="Download"/>
-					<input type="button" id="fileCancle" value="Cancel"/>
-				</div>
-				<div class="inner name">
-					<input type="text" id="tabName" value="Document"/>
-					<input type="button" id="tabSave" value="Save"/>
-					<input type="button" id="tabCancle" value="Cancel"/>
-				</div>
-				<div class="inner alert">
-					<input type="button" id="alertDo" value="Yes"/>
-					<input type="button" id="alertDont" value="No"/>
-				</div>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="vendor/jquery/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="editor.css">
+	<script src="vendor/jquery/jquery.js"></script>
+	<script src="vendor/jquery/jquery-ui.js"></script>
+	<script src="vendor/tinymce/tinymce.min.js"></script>
+	<script src="data.js"></script>
+	<script src="tabs.js"></script>
+</head>
+
+<body>
+	<header>
+		<input type="button" id="add" value="+" />
+		<input type="button" id="doDelete" value="x" />
+		<input type="button" id="doSave" value="Download" />
+		<input type="button" id="doEmail" value="Email" />
+		<input type="button" id="doTab" value="Tab" />
+	</header>
+	<nav>
+	</nav>
+	<main>
+		<div id="editor-toolbar"></div>
+		<textarea id="editor" class="html"></textarea>
+		<div id="prompt">
+			<div class="inner">
+				<input type="text" id="fileName" value="file.txt" />
+				<input type="button" id="fileSave" value="Download" />
+				<input type="button" id="fileCancle" value="Cancel" />
 			</div>
-		</main>
-		<script src="editor.js"></script>
-	</body>
+			<div class="inner name">
+				<input type="text" id="tabName" value="Document" />
+				<input type="button" id="tabSave" value="Save" />
+				<input type="button" id="tabCancle" value="Cancel" />
+			</div>
+			<div class="inner alert">
+				<input type="button" id="alertDo" value="Yes" />
+				<input type="button" id="alertDont" value="No" />
+			</div>
+		</div>
+	</main>
+	<script src="editor.js"></script>
+</body>
+
 </html>

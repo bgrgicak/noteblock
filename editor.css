@@ -1,165 +1,181 @@
-*{
-	margin: 0;
-	padding: 0;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box; 
-    border: none;
-    outline: none;
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
 }
 /**:not(#editor){
     -webkit-touch-callout: none;
     -webkit-user-select: none;
 }*/
-body{
-    background: rgba(0, 0, 0, 0.1);
+body {
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
- 
-::-webkit-scrollbar-track {
-    background: rgba(0,0,0,0.3); 
-}
- 
-::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.5); 
+  width: 8px;
+  height: 8px;
 }
 
-input{
-    background: rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    line-height: 18px;
-    padding: 5px 10px;
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+input {
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  line-height: 18px;
+  padding: 5px 10px;
 }
 input:focus,
-input:hover{    
-	background: rgba(0, 0, 0, 0.20);
+input:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
-nav .tab.active{
-	background: rgba(0, 0, 0, 0.22);
-    font-weight: 700;
+nav .tab.active {
+  background: rgba(0, 0, 0, 0.22);
+  font-weight: 700;
 }
 
-input[type=text]{
-	display: block;
-    width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.29);
-    font-size: 14px;
-    line-height: 18px;
+input[type="text"] {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.29);
+  font-size: 14px;
+  line-height: 18px;
 }
-input[type=button]{
-	cursor:pointer;
+input[type="button"] {
+  cursor: pointer;
 }
-.ui-icon, .ui-widget-content .ui-icon{
-	background-image: none;
+.ui-icon,
+.ui-widget-content .ui-icon {
+  background-image: none;
 }
-.ui-wrapper{
-	padding:4px;
+.ui-wrapper {
+  padding: 4px;
+  min-width: 100%;
+  min-height: calc(100vh - 75px);
 }
-#editor{
-	width: 100%;
-	min-width: 190px;
-	min-height:200px;
-	max-width: 800px;
-    max-height: 510px;
-    resize: none;
-    position: static;
-    zoom: 1;
-    display: block;
-	padding: 10px;
-    box-sizing: content-box;
-    tab-size: 20px;
+#editor {
+  width: 100%;
+  min-width: 190px;
+  min-height: 200px;
+  max-width: 800px;
+  max-height: 510px;
+  resize: none;
+  position: static;
+  zoom: 1;
+  display: block;
+  padding: 10px;
+  box-sizing: content-box;
+  tab-size: 20px;
 }
-header{
-	padding: 8px 8px 5px 8px;
+header {
+  padding: 8px 8px 5px 8px;
 }
 header:after {
-    content:'';
-    display:block;
-    clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 header input {
-    float: right;
-    margin-left: 10px;
+  float: right;
+  margin-left: 10px;
 }
-header input[type=button] {
-    font-size: 12px;
-    padding: 1px 8px;
+header input[type="button"] {
+  font-size: 12px;
+  padding: 1px 8px;
 }
-header input[type=button]#add {
-	float: left;
-    margin: 0;
-    padding: 1px 7px;
-    font-size: 12px;
+header input[type="button"]#add {
+  float: left;
+  margin: 0;
+  padding: 1px 7px;
+  font-size: 12px;
 }
-header input[type=button]#add:hover {
-    font-weight: bold;
+header input[type="button"]#add:hover {
+  font-weight: bold;
 }
-nav{
-    margin: 0 8px;
-    display: block;
-    margin-bottom: 4px;
-	
+nav {
+  margin: 0 8px;
+  display: block;
+  margin-bottom: 4px;
 }
-nav input[type=button]{
-    display: inline-block;
-    font-size: 12px;
-    padding: 1px 5px;
-    margin-right: 8px;
-    margin-top: 4px;
+nav input[type="button"] {
+  display: inline-block;
+  font-size: 12px;
+  padding: 1px 5px;
+  margin-right: 8px;
+  margin-top: 4px;
 }
-nav input[type=button]:hover{
-	
+#prompt {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
 }
-#prompt{
-	width: 100%;
-	height:100%;
-	z-index:100;
-	background-color: rgba(0,0,0,0.2);
-	position:fixed;
-	top:0;
-	left:0;
-	display: none;
+#prompt.active {
+  display: block;
 }
-#prompt.active{
-	display: block;
-}
-#prompt .inner{
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    display: table;
-    margin: 0 auto;
-    background: #fff;
-    padding: 20px;
+#prompt .inner {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: table;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
 }
 #prompt.name .inner,
 #prompt .inner.name,
 #prompt.alert .inner,
-#prompt .inner.alert{
-	display: none;
+#prompt .inner.alert {
+  display: none;
 }
 #prompt.name .inner.name,
-#prompt.alert .inner.alert{
-	display: table;
+#prompt.alert .inner.alert {
+  display: table;
 }
 
-#prompt .inner input[type=button]{
-	display: inline-block;
-    width: calc(50% - 5px);
-    margin-top: 10px;
-    cursor:pointer;
+#prompt .inner input[type="button"] {
+  display: inline-block;
+  width: calc(50% - 5px);
+  margin-top: 10px;
+  cursor: pointer;
 }
-#prompt.alert .inner.alert:before{
-	display:block;
-	content:'Are you sure you want to delete this tab?';
-	font-size: 14px;
-    max-width: 160px;
+#prompt.alert .inner.alert:before {
+  display: block;
+  content: "Are you sure you want to delete this tab?";
+  font-size: 14px;
+  max-width: 160px;
 }
-#prompt .inner input[type=button]#tabSave,
-#prompt .inner input[type=button]#alertDo,
-#prompt .inner input[type=button]#fileSave{
-	margin-right:10px;
+#prompt .inner input[type="button"]#tabSave,
+#prompt .inner input[type="button"]#alertDo,
+#prompt .inner input[type="button"]#fileSave {
+  margin-right: 10px;
+}
+
+.mce-tinymce.mce-container.mce-panel {
+  width: calc(100% - 5px) !important;
+  height: calc(100vh - 75px);
+}
+.mce-container-body.mce-stack-layout,
+.mce-edit-area.mce-container.mce-panel.mce-stack-layout-item {
+  height: inherit;
+}
+.mce-container-body.mce-stack-layout {
+  overflow: hidden;
+}
+.mce-edit-area {
+  height: calc(100% - 34px);
+  overflow-y: auto;
 }
