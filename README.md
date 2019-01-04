@@ -1,12 +1,29 @@
 # noteblock
-Simple JavaScript text editor with multiple tabs.
-The text is saved in Chrome local storage.
-File download and mailto functions.
 
-<a href="https://chrome.google.com/webstore/detail/noteblock/lgggceedgldbcfbpkacockgbkbpjcfdh" class="btn">
-  Install Chrome extension
-</a>
+## Project setup
+```
+npm install
+```
 
-<a href="https://chrome.google.com/webstore/detail/noteblock/lgggceedgldbcfbpkacockgbkbpjcfdh">
-  <img src="https://lh3.googleusercontent.com/lNAwIXSiozbX657HhI8okszLDvrTYiR-JhvlZV-UrREjJXZDOB8V7r_qSQrdgbDbAvhnAaWHrQ=s1280-h800-e365-rw" />
-</a>
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
