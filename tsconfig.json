@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
@@ -12,10 +12,10 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
-      "vuetify"
+      "webpack-env"
     ],
     "paths": {
+      "*": ["types/*"],
       "@/*": [
         "src/*"
       ]
