@@ -21,6 +21,10 @@ export default class TabService {
     return this.$store.getters[`${this.storeKey}/active`]
   }
 
+  activeTab(): Tab {
+    return this.$store.getters[`${this.storeKey}/activeTab`]
+  }
+
   add(): void {
     const tab = new Tab(DB.id(), 'Tab')
     this.$store.dispatch(`${this.storeKey}/add`, tab)

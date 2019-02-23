@@ -1,7 +1,7 @@
 <template>
   <v-card-title class="blue white--text py-0 editor-header" >
     <v-tabs
-      :value="activeTab"
+      :value="active"
       color="blue"
       dark
       slider-color="white">
@@ -9,7 +9,7 @@
         v-for="(tab, index) in tabs"
         :key="index"
         ripple
-        @click="activeTabChange(index)">
+        @click="activeChange(index)">
         {{ tab.name }}
       </v-tab>
     </v-tabs>
@@ -41,15 +41,15 @@ import Tab from '@/model/tab'
 export default class EditorHeader extends Vue {
   private tabService: TabService = new TabService(this.$store)
 
-  get activeTab(): number {
+  get active(): number {
     return this.tabService.active()
   }
 
   get tabs(): Tab[] {
     return this.tabService.getAll()
   }
-  private activeTabChange(index: number): void {
-    if(index != this.activeTab) {
+  private activeChange(index: number): void {
+    if(index != this.active) {
       this.tabService.setActive(index)
     }
   }

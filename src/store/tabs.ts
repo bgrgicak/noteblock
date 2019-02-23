@@ -24,19 +24,22 @@ const getters = {
   },
   active: (state: any) => {
     return state.active
+  },
+  activeTab: (state: any) => {
+    return state.active && state.tabs[state.active] ?  state.tabs[state.active] : state.tabs[0]
   }
 }
 
 const mutations: MutationTree<RootState> = {
   add(state, tab: Tab) {
     const tabs = [...state.tabs]
-    tabs.push(tab)
+    tabs.push(Object.freeze(tab))
     state.tabs = tabs
   },
   update(state, tab: Tab) {
     const currentTabIndex = state.tabs.findIndex((t: Tab) => t.id == tab.id)
     const tabs = [...state.tabs]
-    tabs[currentTabIndex] = tab
+    tabs[currentTabIndex] = Object.freeze(tab)
     state.tabs = tabs
   },
   updateAll(state, tabs: Tab[]) {
