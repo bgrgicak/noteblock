@@ -4,6 +4,7 @@
       :value="active"
       color="blue"
       dark
+      show-arrows
       slider-color="white">
       <v-tab
         v-for="(tab, index) in tabs"
@@ -13,9 +14,14 @@
         {{ tab.name }}
       </v-tab>
     </v-tabs>
-    <v-btn color="primary" fab small dark @click="addTab">
-      <v-icon>add</v-icon>
-    </v-btn>
+    <v-tooltip bottom>
+      <template #activator="data">
+        <v-btn color="primary" v-on="data.on" fab small dark @click="addTab">
+          <v-icon>add</v-icon>
+        </v-btn>
+      </template>
+      <span>Add tab</span>
+    </v-tooltip>
   
     <v-spacer></v-spacer>
 
@@ -26,7 +32,8 @@
 
       <v-list>
         <v-list-tile>
-          <v-list-tile-title>Settings</v-list-tile-title>
+          <v-list-tile-title @click="openApp('tab')">Open in new tab</v-list-tile-title>
+          <v-list-tile-title @click="openApp('popup')">Open as new window</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -57,6 +64,12 @@ export default class EditorHeader extends Vue {
     const activeIndex = this.tabs.length
     this.tabService.add()
     this.tabService.setActive(activeIndex)
+  } 
+  private openApp(type: string = 'tab'): void {
+    chrome.windows.create({
+      url: chrome.runtime.getURL("index.html"),
+      type: type
+    })
   }
 }
 </script>

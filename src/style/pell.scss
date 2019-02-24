@@ -1,0 +1,23 @@
+$pell-content-height: calc(100vh - 12.3rem);
+
+@import '../../node_modules/pell/src/pell';
+
+.pell {
+  border: none;
+  .pell-actionbar {
+    .pell-button {
+      &:last-child {
+        float: right;
+        margin-right: 1rem;
+        .material-icons {
+          color: $iconColorLight;
+        }
+      }
+      .material-icons {
+        font-size: 2rem;
+        vertical-align: bottom;
+        color: $iconColor;
+      }
+    }
+  }
+}

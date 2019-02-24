@@ -1,8 +1,8 @@
 @import "~vuetify/dist/vuetify";
 @import "~bootstrap/scss/bootstrap";
-@import "~pell/dist/pell.min.css";
 
-
+@import 'colors';
 @import 'layout';
 @import 'vuetify';
 @import 'pell';
+@import 'editor/main';

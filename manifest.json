@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Noteblock dev",
+  "name": "Not dev",
   "version": "1.2.4",
   "description": "Simple text editor",
   "icons": {
@@ -11,7 +11,7 @@
   "browser_action": {
     "default_icon": "icons/icon.png",
     "default_popup": "index.html",
-    "default_title": "Noteblock dev"
+    "default_title": "Not dev"
   },
   "permissions": ["storage"]
 }
