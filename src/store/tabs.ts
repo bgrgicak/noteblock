@@ -1,19 +1,27 @@
 import Tab from '@/model/tab'
-import DB from '@/utility/db'
 import Vuex, { MutationTree, ActionTree } from 'vuex'
+import consts from '@/utility/consts';
 
-const collectionName = 'tabs'
-
-const loadedState: RootState = {
-  tabs: [new Tab(DB.id(), 'Your block')],
-  active: 0
-}
 interface RootState {
   tabs: Tab[],
-  active: number
+  activeTabId: string | null,
+  loaded: boolean
 }
 
-const state: RootState = loadedState
+function updateState(state: RootState) {
+  chrome.storage.sync.set({
+    [consts.tabStoreKey]: state
+  })
+}
+function getState(callback: any) {
+  chrome.storage.sync.get([consts.tabStoreKey], callback)
+}
+
+const state: RootState = {
+  tabs: [],
+  activeTabId: null,
+  loaded: false
+}
 
 const getters = {
   get: (state: any) => (tabId: string) => {
@@ -22,48 +30,74 @@ const getters = {
   getAll: (state: any) => {
     return state.tabs
   },
-  active: (state: any) => {
-    return state.active
-  },
   activeTab: (state: any) => {
-    return state.active && state.tabs[state.active] ?  state.tabs[state.active] : state.tabs[0]
+    if (state.activeTabId !== null) {
+      const tab = state.tabs.find((t: Tab) => t.id === state.activeTabId)
+      if (tab) {
+        return tab
+      }
+    }
+    return state.tabs[0]
+  },
+  loaded: (state: any) => {
+    return state.loaded
   }
 }
 
 const mutations: MutationTree<RootState> = {
-  add(state, tab: Tab) {
-    const tabs = [...state.tabs]
-    tabs.push(Object.freeze(tab))
-    state.tabs = tabs
-  },
-  update(state, tab: Tab) {
+  createOrUpdate(state, tab: Tab) {
     const currentTabIndex = state.tabs.findIndex((t: Tab) => t.id == tab.id)
+
     const tabs = [...state.tabs]
-    tabs[currentTabIndex] = Object.freeze(tab)
+
+    if(currentTabIndex > -1) {
+      tabs[currentTabIndex] = Object.freeze(tab)
+    } else {
+      tabs.push(Object.freeze(tab))
+    }
     state.tabs = tabs
+    updateState(state)
   },
-  updateAll(state, tabs: Tab[]) {
-    state.tabs = tabs
+  remove(state, tabId: string) {
+    state.tabs = state.tabs.filter((t: Tab) => t.id !== tabId)
+    updateState(state)
   },
-  setActive(state, tabIndex: number) {
-    state.active = tabIndex
+  setActive(state, tabId: string) {
+    state.activeTabId = tabId
+    updateState(state)
+  },
+  loaded(state, loaded: boolean) {
+    state.loaded = loaded
   },
 }
 
 const actions: ActionTree<RootState, RootState> = {
   add({ commit }, tab: Tab) {
-    commit('add', tab)
+    commit('createOrUpdate', tab)
   },
   update({ commit }, tab: Tab) {
-    commit('update', tab)
+    commit('createOrUpdate', tab)
   },
-  updateAll({ commit }, tabs: Tab[]) {
-    commit('updateAll', tabs)
+  remove({ commit }, tabId: string) {
+    commit('remove', tabId)
   },
   setActive({ commit }, tabIndex: number) {
     commit('setActive', tabIndex)
   },
+  load({ commit }) {
+    getState((res: any) => {
+      const data = res[consts.tabStoreKey]
+      if (data && data.tabs && data.tabs.length > 0) {
+        data.tabs.forEach((tab: Tab) => {
+          commit('createOrUpdate', tab)
+        })
+        commit('setActive', data.activeTabId ? data.activeTabId : data.tabs[0].id)
+      }
+      commit('loaded', true)
+    })
+  }
 }
+
 export default {
   namespaced: true,
   getters,

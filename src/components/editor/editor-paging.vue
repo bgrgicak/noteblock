@@ -1,10 +1,14 @@
 <template>
-  <div class="text-xs-center editor-paging">
+  <div class="editor-paging">
     <v-pagination
-      v-model="page"
+      v-if="hasPaging"
+      v-model="activePageId"
       :length="4"
-      circle
-    ></v-pagination>
+      circle>
+    </v-pagination>
+
+    <v-spacer></v-spacer>
+    
     <v-tooltip top>
       <template #activator="data">
         <v-btn color="primary" v-on="data.on" class="add-page" fab small dark @click="addPage">
@@ -22,10 +26,18 @@ import Tab from '@/model/tab'
 
 @Component
 export default class EditorPaging extends Vue {
-  private page: number = 1
+  @Prop() tabs: Tab[]
+  @Prop() activeTab: Tab
+
+  get activePageId(): number {
+    return this.activeTab.activePageId
+  }
+  get hasPaging(): number {
+    return this.activeTab.pageIds.length > 1
+  }
 
   private addPage(): void {
-
+    console.log('PAGE')
   }
 }
 </script>

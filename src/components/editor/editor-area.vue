@@ -1,19 +1,35 @@
 <template>
-  <v-card-text class="py-0 editor-area" >
-    <div ref="editor" class="pell"></div>
+  <v-card-text class="py-0 editor-area" :class="{'hide-page-delete': activeTab.pageIds.length < 2}">
+    <div ref="editor" class="pell" @keydown="onKeyup" @click="onClick"></div>
   </v-card-text>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import TabService from '../../service/tab-service'
-import Tab from '@/model/tab'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import pell from 'pell'
+import { isLink } from '@/utility/format';
+import Page from '@/model/page'
+import PageService from '@/service/page-service'
+import TabService from '@/service/tab-service';
+import Tab from '@/model/tab'
 
 @Component
 export default class EditorHeader extends Vue {
+  @Prop() tabs: Tab[]
+  @Prop() activeTab: Tab
+
+  private pageService: PageService = new PageService(this.$store)
   private tabService: TabService = new TabService(this.$store)
-  get activeTab(): Tab {
-    return this.tabService.activeTab()
+
+  private editor: any
+
+  get activePageId(): string {
+    return this.activeTab.activePageId
+  }
+  get activePage(): Page | undefined {
+    if (this.activeTab == undefined) {
+      return undefined
+    }
+    return this.pageService.get(this.activePageId)
   }
   private ensureHTTP(str: string): string {
     return /^https?:\/\//.test(str) && str || `http://${str}`
@@ -21,19 +37,67 @@ export default class EditorHeader extends Vue {
   private deletePage(): void {
     console.log('DELETE PAGE')
   }
+  private onKeyup(event: any): void {
+    if (event.key === 'Tab') {
+      event.preventDefault()
+      pell.exec(event.shiftKey ? 'outdent' : 'indent')
+    }
+  }
+  private onClick(event: any): void {
+    if (event.target.tagName === 'A' &&
+      (event.ctrlKey === true || event.metaKey === true)
+      && isLink(event.target.href)
+    ) {
+      chrome.tabs.create({
+        url: event.target.href
+      })
+    }
+  }
+  private updatePage(content: string): void {
+    console.log(this.activePage)
+    if(this.activePage) {
+     this.pageService.update(Object.assign(this.activePage, { content }))
+    } else {
+      this.pageService.update(
+        new Page(
+          this.activePageId, 
+          this.activeTab.id, 
+          this.activeTab.pageIds.length,
+          content
+        )
+      )
+    }
+  }
+
+  @Watch('activePage') activePageUpdate() {
+    if(this.activePage) {
+      this.editor.content.innerHTML = this.activePage.content
+    }
+  }
+
   mounted() {
-    const editor = pell.init({
+    this.editor = pell.init({
       element: this.$refs.editor,
-      onChange: (html: any) => {
-        console.log(html)
-      },
+      onChange: this.updatePage,
       defaultParagraphSeparator: 'p',
       styleWithCSS: true,
       actions: [
-        'bold',
-        'italic',
-        'underline',
-        'strikethrough',
+        {
+          name: 'bold',
+          icon: '<i class="material-icons">format_bold</i>',
+        },
+        {
+          name: 'italic',
+          icon: '<i class="material-icons">format_italic</i>',
+        },
+        {
+          name: 'underline',
+          icon: '<i class="material-icons">format_underline</i>',
+        },
+        {
+          name: 'strikethrough',
+          icon: '<i class="material-icons">format_strikethrough</i>',
+        },
         'heading1',
         'heading2',
         {
@@ -44,24 +108,31 @@ export default class EditorHeader extends Vue {
           name: 'ulist',
           icon: '<i class="material-icons">format_list_bulleted</i>',
         },
-        'code',
+        {
+          name: 'link',
+          icon: '<i class="material-icons">link</i>',
+          result: () => {
+            const url = window.prompt('Enter the link URL')
+            if (url) {
+              pell.exec('createLink', this.ensureHTTP(url))
+            }
+          }
+        },
         'line',
         {
           name: 'image',
+          icon: '<i class="material-icons">add_photo_alternate</i>',
           result: () => {
             const url = window.prompt('Enter the image URL')
-            if (url) pell.exec('insertImage', this.ensureHTTP(url))
+            if (url) {
+              pell.exec('insertImage', this.ensureHTTP(url))
+            }
           }
         },
-        {
-          name: 'link',
-          result: () => {
-            const url = window.prompt('Enter the link URL')
-            if (url) pell.exec('createLink', this.ensureHTTP(url))
-          }
-        },
+        'code',
         {
           name: 'deletePage',
+          class: 'page-delete'
           icon: '<i class="material-icons">delete</i>',
           title: 'Delete page',
           result: this.deletePage
@@ -71,3 +142,10 @@ export default class EditorHeader extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.hide-page-delete {
+  .page-delete {
+    display: none;
+  }
+}
+</style>

@@ -1,23 +1,33 @@
-$pell-content-height: calc(100vh - 12.3rem);
+$pell-content-height: calc(100vh - 14.3rem);
 
 @import '../../node_modules/pell/src/pell';
 
 .pell {
   border: none;
   .pell-actionbar {
+    display: flex;
     .pell-button {
-      &:last-child {
-        float: right;
-        margin-right: 1rem;
-        .material-icons {
-          color: $iconColorLight;
-        }
-      }
       .material-icons {
-        font-size: 2rem;
+        font-size: 1.6rem;
         vertical-align: bottom;
         color: $iconColor;
       }
+
+      &:last-child {
+        margin-right: 1rem;
+        margin-left: auto;    
+        .material-icons {
+          color: $iconColorLight;
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+  .pell-content {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    p {
+      margin-bottom: 0;
     }
   }
 }

@@ -24,7 +24,8 @@
     "variable-name": false,
     "no-bitwise": false,
     "no-conditional-assignment": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "interface-name": false
   },
   "rulesDirectory": []
 }
