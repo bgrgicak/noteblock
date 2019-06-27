@@ -26,9 +26,6 @@ export default class EditorHeader extends Vue {
     return this.activeTab.activePageId
   }
   get activePage(): Page | undefined {
-    if (this.activeTab == undefined) {
-      return undefined
-    }
     return this.pageService.get(this.activePageId)
   }
   private ensureHTTP(str: string): string {
@@ -54,22 +51,15 @@ export default class EditorHeader extends Vue {
     }
   }
   private updatePage(content: string): void {
-    console.log(this.activePage)
-    if(this.activePage) {
-     this.pageService.update(Object.assign(this.activePage, { content }))
-    } else {
-      this.pageService.update(
-        new Page(
-          this.activePageId, 
-          this.activeTab.id, 
-          this.activeTab.pageIds.length,
-          content
-        )
-      )
-    }
+    this.pageService.createOrUpdate(
+      Object.assign(this.activePage, { content })
+    )
   }
 
-  @Watch('activePage') activePageUpdate() {
+  @Watch('activePageId', {immediate: true}) activePageIdChange() {
+    this.pageService.loadPage(this.activePageId)
+  }
+  @Watch('activePage', {immediate: true}) activePageChange() {
     if(this.activePage) {
       this.editor.content.innerHTML = this.activePage.content
     }
@@ -132,7 +122,7 @@ export default class EditorHeader extends Vue {
         'code',
         {
           name: 'deletePage',
-          class: 'page-delete'
+          class: 'page-delete',
           icon: '<i class="material-icons">delete</i>',
           title: 'Delete page',
           result: this.deletePage
@@ -142,9 +132,9 @@ export default class EditorHeader extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .hide-page-delete {
-  .page-delete {
+  .pell-actionbar .pell-button:last-child {
     display: none;
   }
 }

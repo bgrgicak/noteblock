@@ -9,12 +9,32 @@ interface RootState {
 }
 
 function updateState(state: RootState) {
-  chrome.storage.sync.set({
-    [consts.tabStoreKey]: state
-  })
+  try {
+    chrome.storage.sync.set({
+      [consts.tabStoreKey]: state
+    })
+  } catch(ex) {
+    console.log(ex)
+  }
 }
 function getState(callback: any) {
-  chrome.storage.sync.get([consts.tabStoreKey], callback)
+  try {
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+      if (changes[consts.tabStoreKey]) {
+        callback({
+          [consts.tabStoreKey]: changes[consts.tabStoreKey].newValue
+        })
+      }
+    })
+  } catch(ex) {
+    console.log(ex)
+  }
+
+  try {
+    chrome.storage.sync.get([consts.tabStoreKey], callback)
+  } catch(ex) {
+    console.log(ex)
+  }
 }
 
 const state: RootState = {
@@ -45,26 +65,30 @@ const getters = {
 }
 
 const mutations: MutationTree<RootState> = {
-  createOrUpdate(state, tab: Tab) {
-    const currentTabIndex = state.tabs.findIndex((t: Tab) => t.id == tab.id)
+  createOrUpdate(state, data) {
+    const currentTabIndex = state.tabs.findIndex((t: Tab) => t.id == data.tab.id)
 
     const tabs = [...state.tabs]
 
     if(currentTabIndex > -1) {
-      tabs[currentTabIndex] = Object.freeze(tab)
+      tabs[currentTabIndex] = Object.freeze(data.tab)
     } else {
-      tabs.push(Object.freeze(tab))
+      tabs.push(Object.freeze(data.tab))
     }
     state.tabs = tabs
-    updateState(state)
+    if (data.disableUpdate !== true) {
+      updateState(state)
+    }
   },
   remove(state, tabId: string) {
     state.tabs = state.tabs.filter((t: Tab) => t.id !== tabId)
     updateState(state)
   },
-  setActive(state, tabId: string) {
-    state.activeTabId = tabId
-    updateState(state)
+  setActive(state, data) {
+    state.activeTabId = data.tabId
+    if (data.disableUpdate !== true) {
+      updateState(state)
+    }
   },
   loaded(state, loaded: boolean) {
     state.loaded = loaded
@@ -73,25 +97,28 @@ const mutations: MutationTree<RootState> = {
 
 const actions: ActionTree<RootState, RootState> = {
   add({ commit }, tab: Tab) {
-    commit('createOrUpdate', tab)
+    commit('createOrUpdate', {tab})
   },
   update({ commit }, tab: Tab) {
-    commit('createOrUpdate', tab)
+    commit('createOrUpdate', {tab})
   },
   remove({ commit }, tabId: string) {
     commit('remove', tabId)
   },
-  setActive({ commit }, tabIndex: number) {
-    commit('setActive', tabIndex)
+  setActive({ commit }, tabId: string) {
+    commit('setActive', {tabId})
   },
   load({ commit }) {
     getState((res: any) => {
       const data = res[consts.tabStoreKey]
       if (data && data.tabs && data.tabs.length > 0) {
         data.tabs.forEach((tab: Tab) => {
-          commit('createOrUpdate', tab)
+          commit('createOrUpdate', {tab, disableUpdate: true})
         })
-        commit('setActive', data.activeTabId ? data.activeTabId : data.tabs[0].id)
+        commit('setActive',  {
+          tabId: data.activeTabId ? data.activeTabId : data.tabs[0].id, 
+          disableUpdate: true
+        })
       }
       commit('loaded', true)
     })

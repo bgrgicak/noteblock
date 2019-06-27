@@ -11,22 +11,11 @@ export default class PageService {
     return this.$store.getters[`${consts.pageStoreKey}/get`](pageId)
   }
 
-  getAll(tabId: string): Page[] {
-    return this.$store.getters[`${consts.pageStoreKey}/getAll`](tabId)
+  createOrUpdate(page: Page): void {
+    this.$store.dispatch(`${consts.pageStoreKey}/createOrUpdate`, page)
   }
 
-  add(tabId: string): void {
-    const pages = this.getAll(tabId)
-    const page = new Page(
-      DB.id(),
-      tabId,
-      pages && pages.length ? pages.length : 0,
-      ''
-    )
-    this.$store.dispatch(`${consts.pageStoreKey}/add`, page)
-  }
-
-  update(page: Page): void {
-    this.$store.dispatch(`${consts.pageStoreKey}/update`, page)
+  loadPage(pageId: string): void {
+    this.$store.dispatch(`${consts.pageStoreKey}/loadPage`, pageId)
   }
 }

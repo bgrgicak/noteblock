@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import notAppTabs from './store/tabs'
-import notAppPages from './store/pages'
+import notAppTabs from './store/tab-store'
+import notAppPages from './store/page-store'
 
 Vue.use(Vuex)
 const modules: any = {

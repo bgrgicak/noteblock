@@ -2,6 +2,7 @@ import Tab from '@/model/tab';
 import DB from '@/utility/db';
 import Page from '@/model/page';
 import consts from '@/utility/consts';
+import PageService from './page-service';
 
 export default class TabService {
   constructor(
@@ -29,21 +30,12 @@ export default class TabService {
   }
 
   add(tabName: string | undefined): void {
-    const tabId = DB.id()
-
-    const page = new Page(
-      DB.id(),
-      tabId,
-      0,
-      ''
-    )
-    this.$store.dispatch(`${consts.pageStoreKey}/add`, page)
-
+    const pageId = DB.id()
     const tab = new Tab(
-      tabId,
+      DB.id(),
       tabName ? tabName : 'Tab',
-      [page.id],
-      page.id
+      [pageId],
+      pageId
     )
     this.$store.dispatch(`${consts.tabStoreKey}/add`, tab)
   }

@@ -29,10 +29,10 @@ export default class EditorPaging extends Vue {
   @Prop() tabs: Tab[]
   @Prop() activeTab: Tab
 
-  get activePageId(): number {
+  get activePageId(): string {
     return this.activeTab.activePageId
   }
-  get hasPaging(): number {
+  get hasPaging(): boolean {
     return this.activeTab.pageIds.length > 1
   }
 
