@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Not",
-  "version": "1.2.4",
+  "name": "Noteblock",
+  "version": "2.0",
   "description": "Simple text editor",
   "icons": {
     "16": "icons/icon16.png",
@@ -17,6 +17,6 @@
       "32": "icons/icon32.png"
     }
   },
-  "permissions": ["tabs", "storage"],
+  "permissions": ["tabs", "storage", "contextMenus"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

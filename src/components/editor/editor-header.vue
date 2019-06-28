@@ -29,7 +29,7 @@
 
     <v-spacer></v-spacer>
 
-    <editor-menu></editor-menu>
+    <editor-menu :activeTab="activeTab"></editor-menu>
 
 
     <v-dialog :value="renameTab !== null">

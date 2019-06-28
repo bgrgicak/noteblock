@@ -11,6 +11,8 @@
   "dependencies": {
     "@types/chrome": "0.0.81",
     "bootstrap": "^4.3.1",
+    "html2canvas": "^1.0.0-rc.3",
+    "jspdf": "^1.5.3",
     "pell": "^1.0.6",
     "vue": "^2.6.10",
     "vue-class-component": "^6.3.2",

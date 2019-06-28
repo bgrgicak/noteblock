@@ -64,7 +64,6 @@ export default class EditorHeader extends Vue {
       this.editor.content.innerHTML = this.activePage.content
     }
   }
-
   mounted() {
     this.editor = pell.init({
       element: this.$refs.editor,

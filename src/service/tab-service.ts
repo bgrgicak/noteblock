@@ -29,14 +29,16 @@ export default class TabService {
     return this.$store.getters[`${consts.tabStoreKey}/getAll`]
   }
 
-  add(tabName: string | undefined): void {
-    const pageId = DB.id()
-    const tab = new Tab(
-      DB.id(),
-      tabName ? tabName : 'Tab',
-      [pageId],
-      pageId
-    )
+  add(tab: Tab | undefined): void {
+    if (tab === undefined) {
+      const pageId = DB.id()
+      tab = new Tab(
+        DB.id(),
+        'Tab',
+        [pageId],
+        pageId
+      )
+    }
     this.$store.dispatch(`${consts.tabStoreKey}/add`, tab)
   }
 
