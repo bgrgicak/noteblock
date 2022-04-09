@@ -1,3 +1,12 @@
+:root {
+    --main-bg-color: #ffffff;
+    --main-button-color: #efefef;
+    --hover-button-color: #e6e6e6;
+    --focus-button-color: #e6e6e6;
+    --focus-border: 1px solid #dadada;
+
+    --editor-border: 1px solid #dadada;
+}
 *{
 	margin: 0;
 	padding: 0;
@@ -7,12 +16,8 @@
     border: none;
     outline: none;
 }
-/**:not(#editor){
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-}*/
 body{
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--main-bg-color);
 }
 ::-webkit-scrollbar {
     width: 8px;
@@ -28,18 +33,21 @@ body{
 }
 
 input{
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--main-button-color);
     font-size: 14px;
     line-height: 18px;
     padding: 5px 10px;
+    border-radius: 3px;
 }
-input:focus,
 input:hover{    
-	background: rgba(0, 0, 0, 0.20);
+	background: var(--hover-button-color);
+}
+input:focus{    
+	background: var(--focus-button-color);
 }
 nav .tab.active{
-	background: rgba(0, 0, 0, 0.22);
-    font-weight: 700;
+	background: var(--focus-button-color);
+    border: var(--focus-border);
 }
 
 input[type=text]{
@@ -71,6 +79,9 @@ input[type=button]{
 	padding: 10px;
     box-sizing: content-box;
     tab-size: 20px;
+    font-family: sans-serif;
+    font-weight: 300;
+    border: var(--editor-border);
 }
 header{
 	padding: 8px 8px 5px 8px;
@@ -93,9 +104,6 @@ header input[type=button]#add {
     margin: 0;
     padding: 1px 7px;
     font-size: 12px;
-}
-header input[type=button]#add:hover {
-    font-weight: bold;
 }
 nav{
     margin: 0 8px;
@@ -132,7 +140,7 @@ nav input[type=button]:hover{
     transform: translateY(-50%);
     display: table;
     margin: 0 auto;
-    background: #fff;
+    background: var(--main-bg-color);
     padding: 20px;
 }
 #prompt.name .inner,
