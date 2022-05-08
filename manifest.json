@@ -12,7 +12,7 @@
   },
   "browser_action": {
     "default_icon": "icons/icon128.png",
-    "default_popup": "editor.html",
+    "default_popup": "index.html",
     "default_title": "Noteblock"
   },
   "browser_specific_settings": {
