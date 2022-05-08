@@ -12,25 +12,27 @@
 	</header>
 	<nav>
 	</nav>
-	<main>
-		<textarea id="editor" class="html"></textarea>
-		<div id="prompt">
-			<div class="inner">
-				<input type="text" id="fileName" value="file.txt" />
-				<input type="button" id="fileSave" value="Download" />
-				<input type="button" id="fileCancle" value="Cancel" />
+	<main id="main">
+		<div id="content">
+			<textarea id="editor" class="html"></textarea>
+			<div id="prompt">
+				<div class="inner">
+					<input type="text" id="fileName" value="file.txt" />
+					<input type="button" id="fileSave" value="Download" />
+					<input type="button" id="fileCancle" value="Cancel" />
+				</div>
+				<div class="inner name">
+					<input type="text" id="tabName" value="Document" />
+					<input type="button" id="tabSave" value="Save" />
+					<input type="button" id="tabCancle" value="Cancel" />
+				</div>
+				<div class="inner alert">
+					<input type="button" id="alertDo" value="Yes" />
+					<input type="button" id="alertDont" value="No" />
+				</div>
 			</div>
-			<div class="inner name">
-				<input type="text" id="tabName" value="Document" />
-				<input type="button" id="tabSave" value="Save" />
-				<input type="button" id="tabCancle" value="Cancel" />
-			</div>
-			<div class="inner alert">
-				<input type="button" id="alertDo" value="Yes" />
-				<input type="button" id="alertDont" value="No" />
-			</div>
+			<div id="resize"></div>
 		</div>
-		<div id="resize">
 	</main>
 	<script src="index.min.js"></script>
 </body>

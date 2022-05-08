@@ -1,173 +1,185 @@
 :root {
-    --main-bg-color: #ffffff;
-    --main-button-color: #efefef;
-    --hover-button-color: #e6e6e6;
-    --focus-button-color: #e6e6e6;
-    --focus-border: 1px solid #dadada;
+  --main-bg-color: #ffffff;
+  --main-button-color: #efefef;
+  --hover-button-color: #e6e6e6;
+  --focus-button-color: #e6e6e6;
+  --focus-border: 1px solid #dadada;
 
-    --editor-border: 1px solid #dadada;
+  --editor-border: 1px solid #dadada;
 }
-*{
-	margin: 0;
-	padding: 0;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box; 
-    border: none;
-    outline: none;
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
 }
-body{
-    background: var(--main-bg-color);
+body {
+  background: var(--main-bg-color);
 }
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
- 
+
 ::-webkit-scrollbar-track {
-    background: rgba(0,0,0,0.3); 
+  background: rgba(0, 0, 0, 0.3);
 }
- 
+
 ::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.5); 
+  background: rgba(0, 0, 0, 0.5);
 }
 
-input{
-    background: var(--main-button-color);
-    font-size: 14px;
-    line-height: 18px;
-    padding: 5px 10px;
-    border-radius: 3px;
+input {
+  background: var(--main-button-color);
+  font-size: 14px;
+  line-height: 18px;
+  padding: 5px 10px;
+  border-radius: 3px;
 }
-input:hover{    
-	background: var(--hover-button-color);
+input:hover {
+  background: var(--hover-button-color);
 }
-input:focus{    
-	background: var(--focus-button-color);
+input:focus {
+  background: var(--focus-button-color);
 }
-nav .tab.active{
-	background: var(--focus-button-color);
-    border: var(--focus-border);
+nav .tab.active {
+  background: var(--focus-button-color);
+  border: var(--focus-border);
 }
 
-input[type=text]{
-	display: block;
-    width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.29);
-    font-size: 14px;
-    line-height: 18px;
+input[type="text"] {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.29);
+  font-size: 14px;
+  line-height: 18px;
 }
-input[type=button]{
-	cursor:pointer;
+input[type="button"] {
+  cursor: pointer;
 }
-.ui-icon, .ui-widget-content .ui-icon{
-	background-image: none;
+.ui-icon,
+.ui-widget-content .ui-icon {
+  background-image: none;
 }
-.ui-wrapper{
-	padding:4px;
+.ui-wrapper {
+  padding: 4px;
 }
-#editor{
-	width: 100%;
-	min-width: 190px;
-	min-height:200px;
-	max-width: 800px;
-    max-height: 510px;
-    resize: none;
-    position: static;
-    zoom: 1;
-    display: block;
-	padding: 10px;
-    box-sizing: content-box;
-    tab-size: 20px;
-    font-family: sans-serif;
-    font-weight: 300;
-    border: var(--editor-border);
+#editor {
+  $editor-padding: 10px;
+  width: calc(100% - #{$editor-padding} * 2);
+  height: calc(100% - #{$editor-padding} * 2);
+  min-width: 190px;
+  min-height: 200px;
+  max-width: 800px;
+  max-height: 510px;
+  resize: none;
+  position: static;
+  zoom: 1;
+  display: block;
+  padding: $editor-padding;
+  box-sizing: content-box;
+  tab-size: 20px;
+  font-family: sans-serif;
+  font-weight: 300;
+  border: var(--editor-border);
 }
-header{
-	padding: 8px 8px 5px 8px;
+header {
+  padding: 8px 8px 5px 8px;
+  height: 33px;
 }
 header:after {
-    content:'';
-    display:block;
-    clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 header input {
-    float: right;
-    margin-left: 10px;
+  float: right;
+  margin-left: 10px;
 }
-header input[type=button] {
-    font-size: 12px;
-    padding: 1px 8px;
+header input[type="button"] {
+  font-size: 12px;
+  padding: 1px 8px;
 }
-header input[type=button]#add {
-	float: left;
-    margin: 0;
-    padding: 1px 7px;
-    font-size: 12px;
+header input[type="button"]#add {
+  float: left;
+  margin: 0;
+  padding: 1px 7px;
+  font-size: 12px;
 }
-nav{
-    margin: 0 8px;
-    display: block;
-    margin-bottom: 4px;
-	
+nav {
+  margin: 0 8px;
+  display: block;
+  margin-bottom: 4px;
 }
-nav input[type=button]{
-    display: inline-block;
-    font-size: 12px;
-    padding: 1px 5px;
-    margin-right: 8px;
-    margin-top: 4px;
+nav input[type="button"] {
+  display: inline-block;
+  font-size: 12px;
+  padding: 1px 5px;
+  margin-right: 8px;
+  margin-top: 4px;
 }
-nav input[type=button]:hover{
-	
+nav input[type="button"]:hover {
 }
-#prompt{
-	width: 100%;
-	height:100%;
-	z-index:100;
-	background-color: rgba(0,0,0,0.2);
-	position:fixed;
-	top:0;
-	left:0;
-	display: none;
+#prompt {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
 }
-#prompt.active{
-	display: block;
+#prompt.active {
+  display: block;
 }
-#prompt .inner{
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    display: table;
-    margin: 0 auto;
-    background: var(--main-bg-color);
-    padding: 20px;
+#prompt .inner {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: table;
+  margin: 0 auto;
+  background: var(--main-bg-color);
+  padding: 20px;
 }
 #prompt.name .inner,
 #prompt .inner.name,
 #prompt.alert .inner,
-#prompt .inner.alert{
-	display: none;
+#prompt .inner.alert {
+  display: none;
 }
 #prompt.name .inner.name,
-#prompt.alert .inner.alert{
-	display: table;
+#prompt.alert .inner.alert {
+  display: table;
 }
 
-#prompt .inner input[type=button]{
-	display: inline-block;
-    width: calc(50% - 5px);
-    margin-top: 10px;
-    cursor:pointer;
+#prompt .inner input[type="button"] {
+  display: inline-block;
+  width: calc(50% - 5px);
+  margin-top: 10px;
+  cursor: pointer;
 }
-#prompt.alert .inner.alert:before{
-	display:block;
-	content:'Are you sure you want to delete this tab?';
-	font-size: 14px;
-    max-width: 160px;
+#prompt.alert .inner.alert:before {
+  display: block;
+  content: "Are you sure you want to delete this tab?";
+  font-size: 14px;
+  max-width: 160px;
 }
-#prompt .inner input[type=button]#tabSave,
-#prompt .inner input[type=button]#alertDo,
-#prompt .inner input[type=button]#fileSave{
-	margin-right:10px;
+#prompt .inner input[type="button"]#tabSave,
+#prompt .inner input[type="button"]#alertDo,
+#prompt .inner input[type="button"]#fileSave {
+  margin-right: 10px;
+}
+
+#resize {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background: red;
 }
